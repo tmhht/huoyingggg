@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>火影8强淘汰赛</title>
+<style>
+  body{
+    background:#111;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    padding:20px;
+  }
+  .title{
+    text-align:center;
+    color:#ff4444;
+    font-size:26px;
+  }
+  .controls{
+    text-align:center;
+    margin-bottom:20px;
+  }
+  button{
+    padding:8px 16px;
+    margin:0 5px;
+    background:#ff4444;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  .bracket{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+  }
+  .round{
+    display:flex;
+    flex-direction:column;
+    gap:50px;
+    width:160px;
+  }
+  .item{
+    background:#222;
+    border:2px solid #777;
+    border-radius:8px;
+    height:110px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    text-align:center;
+    padding:5px;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .item img{
+    width:55px;
+    height:55px;
+    border-radius:6px;
+    object-fit:cover;
+    margin-bottom:6px;
+  }
+  .win{
+    background:#ff4444;
+    color:#000;
+    border-color:#ffaa00;
+  }
+  .champion{
+    background:#ffaa00 !important;
+    color:#000 !important;
+    height:130px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="title">🏆 火影8强单挑擂台赛</h1>
+<div class="controls">
+  <button onclick="undo()">↩️ 撤回上一步</button>
+  <button onclick="reset()">🔁 重置全部</button>
+</div>
+
+<div class="bracket">
+  <!-- 8强 -->
+  <div class="round">
+    <div class="item" onclick="pick(this, 'f1')">
+      < img src="https://p.qqzi.net/avatar/1.png">
+      选手1
+    </div>
+    <div class="item" onclick="pick(this, 'f1')">
+      < img src="https://p.qqzi.net/avatar/2.png">
+      选手2
+    </div>
+    <div class="item" onclick="pick(this, 'f2')">
+      < img src="https://p.qqzi.net/avatar/3.png">
+      选手3
+    </div>
+    <div class="item" onclick="pick(this, 'f2')">
+      < img src="https://p.qqzi.net/avatar/4.png">
+      选手4
+    </div>
+    <div class="item" onclick="pick(this, 'f3')">
+      < img src="https://p.qqzi.net/avatar/5.png">
+      选手5
+    </div>
+    <div class="item" onclick="pick(this, 'f3')">
+      < img src="https://p.qqzi.net/avatar/6.png">
+      选手6
+    </div>
+    <div class="item" onclick="pick(this, 'f4')">
+      < img src="https://p.qqzi.net/avatar/7.png">
+      选手7
+    </div>
+    <div class="item" onclick="pick(this, 'f4')">
+      < img src="https://p.qqzi.net/avatar/8.png">
+      选手8
+    </div>
+  </div>
+
+  <!-- 4强 -->
+  <div class="round">
+    <div class="item" id="f1" onclick="pick(this, 'j1')">4强1</div>
+    <div class="item" id="f2" onclick="pick(this, 'j1')">4强2</div>
+    <div class="item" id="f3" onclick="pick(this, 'j2')">4强3</div>
+    <div class="item" id="f4" onclick="pick(this, 'j2')">4强4</div>
+  </div>
+
+  <!-- 决赛 -->
+  <div class="round">
+    <div class="item" id="j1" onclick="pick(this, 'winner')">决赛1</div>
+    <div class="item" id="j2" onclick="pick(this, 'winner')">决赛2</div>
+  </div>
+
+  <!-- 冠军 -->
+  <div class="round">
+    <div class="item champion" id="winner">👑 冠军</div>
+  </div>
+</div>
+
+<script>
+let history = [];
+let originals = [];
+
+function save(node) {
+  history.push(node);
+  originals.push(node.innerHTML);
+}
+
+function pick(el, targetId) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+  save(target);
+  target.innerHTML = el.innerHTML;
+  target.className = el.className + ' item win';
+}
+
+function undo() {
+  if (history.length == 0) return;
+  let node = history.pop();
+  node.innerHTML = originals.pop();
+  node.className = 'item';
+}
+
+function reset() {
+  location.reload();
+}
+</script>
+
+</body>
+</html>
